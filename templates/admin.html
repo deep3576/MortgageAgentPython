@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Admin Portal</h1>
+
+{# We use subpage to decide which content to show #}
+{% if subpage == 'applications' %}
+  <!-- List of assigned applications -->
+  <h2>My Assigned Applications</h2>
+  <table border="1">
+    <tr>
+      <th>App ID</th>
+      <th>Broker</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    {% for app in applications %}
+    <tr>
+      <td>{{ app.application_id }}</td>
+      <td>{{ app.broker_email }}</td>
+      <td>{{ app.status }}</td>
+      <td>
+        <a href="{{ url_for('admin_application_details', app_id=app.application_id) }}">
+          View Details
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+
+{% elif subpage == 'application_details' %}
+  <!-- Detailed view for a specific application -->
+  <h2>Application #{{ application.application_id }}</h2>
+  <p>Broker Email: {{ application.broker_email }}</p>
+  <p>Current Status: {{ application.status }}</p>
+
+  <!-- Example: form to update status -->
+  <form method="POST">
+    <input type="hidden" name="action" value="update_status" />
+    <label>Change Status:</label>
+    <select name="new_status">
+      <option value="Pending"  {% if application.status == 'Pending' %}selected{% endif %}>Pending</option>
+      <option value="In Review" {% if application.status == 'In Review' %}selected{% endif %}>In Review</option>
+      <option value="Approved" {% if application.status == 'Approved' %}selected{% endif %}>Approved</option>
+      <option value="Rejected" {% if application.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+    </select>
+    <button type="submit">Update</button>
+  </form>
+
+  <hr>
+  <h3>Documents</h3>
+  <table border="1">
+    <tr>
+      <th>Doc ID</th>
+      <th>Doc Type</th>
+      <th>Doc Path</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    {% for d in docs %}
+    <tr>
+      <td>{{ d.doc_id }}</td>
+      <td>{{ d.doc_type }}</td>
+      <td>
+        {% if d.doc_path %}
+          <a href="{{ url_for('static', filename=d.doc_path) }}" target="_blank">View</a>
+        {% else %}
+          (No file)
+        {% endif %}
+      </td>
+      <td>{{ d.doc_status }}</td>
+      <td>
+        <!-- Approve/Reject doc form -->
+        <form method="POST" style="display:inline">
+          <input type="hidden" name="action" value="doc_action" />
+          <input type="hidden" name="doc_id" value="{{ d.doc_id }}" />
+          <select name="doc_status">
+            <option value="approved"  {% if d.doc_status == 'approved' %}selected{% endif %}>approved</option>
+            <option value="rejected"  {% if d.doc_status == 'rejected' %}selected{% endif %}>rejected</option>
+            <option value="pending"   {% if d.doc_status == 'pending' %}selected{% endif %}>pending</option>
+          </select>
+          <button type="submit">Update</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <hr>
+  <h3>Request Additional Documents</h3>
+  <form method="POST">
+    <input type="hidden" name="action" value="request_docs" />
+    <label>Document Name/Type:</label>
+    <input type="text" name="requested_doc_name" required />
+    <button type="submit">Request Document</button>
+  </form>
+
+{% else %}
+  <!-- Default or fallback content if needed -->
+  <p>Select an option above.</p>
+{% endif %}
+{% endblock %}

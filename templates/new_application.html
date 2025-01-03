@@ -1,0 +1,28 @@
+<!-- templates/new_application.html -->
+{% extends "base.html" %}
+{% block content %}
+  <h2>Create New Application</h2>
+  <form method="POST" enctype="multipart/form-data">
+
+    <p>Pay Stubs (last year):</p>
+    <input type="file" name="pay_stubs">
+
+    <p>Bank Statements (up to three years):</p>
+    <input type="file" name="bank_statements">
+
+    <p>Credit Report:</p>
+    <input type="file" name="credit_report">
+
+    <p>Sale Agreement:</p>
+    <input type="file" name="sale_agreement">
+
+    <p>Gift Letter (if applicable):</p>
+    <input type="file" name="gift_letter">
+
+    <p>Property Information:</p>
+    <input type="file" name="property_info">
+
+    <br><br>
+    <button type="submit">Submit Application</button>
+  </form>
+{% endblock %}

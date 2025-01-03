@@ -1,0 +1,29 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Flask MySQL App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body>
+    <div class="nav">
+      <a href="{{ url_for('home') }}">Home</a>
+      {% if 'email' in session %}
+        <a href="{{ url_for('logout') }}">Logout ({{ session.email }})</a>
+        {% if session.role == 'admin' %}
+          <a href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+        {% else %}
+          <a href="{{ url_for('broker_dashboard') }}">Broker Dashboard</a>
+        {% endif %}
+      {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('signup') }}">Sign Up</a>
+      {% endif %}
+    </div>
+
+    <div class="content">
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>

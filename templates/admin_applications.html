@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>My Assigned Applications</h2>
+<table border="1">
+  <tr>
+    <th>App ID</th>
+    <th>Broker</th>
+    <th>Status</th>
+    <th>Actions</th>
+  </tr>
+  {% for app in applications %}
+  <tr>
+    <td>{{ app.application_id }}</td>
+    <td>{{ app.broker_email }}</td>
+    <td>{{ app.status }}</td>
+    <td>
+      <a href="{{ url_for('admin_application_details', app_id=app.application_id) }}">View Details</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Re-upload Document #{{ doc.doc_id }} ({{ doc.doc_type }})</h2>
+{% if doc.doc_status == 'approved' %}
+  <p>This document is already approved. You cannot re-upload.</p>
+{% else %}
+  <form method="POST" enctype="multipart/form-data">
+    <p>Upload File:</p>
+    <input type="file" name="file" />
+    <button type="submit">Submit</button>
+  </form>
+{% endif %}
+{% endblock %}

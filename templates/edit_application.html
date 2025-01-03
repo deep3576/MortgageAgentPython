@@ -1,0 +1,29 @@
+<!-- templates/edit_application.html -->
+{% extends "base.html" %}
+{% block content %}
+  <h2>Edit Application #{{ application.application_id }}</h2>
+  <form method="POST" enctype="multipart/form-data">
+    <p>Re-upload any files you want to replace (others will remain unchanged):</p>
+    
+    <p>Pay Stubs:</p>
+    <input type="file" name="pay_stubs">
+
+    <p>Bank Statements:</p>
+    <input type="file" name="bank_statements">
+
+    <p>Credit Report:</p>
+    <input type="file" name="credit_report">
+
+    <p>Sale Agreement:</p>
+    <input type="file" name="sale_agreement">
+
+    <p>Gift Letter:</p>
+    <input type="file" name="gift_letter">
+
+    <p>Property Information:</p>
+    <input type="file" name="property_info">
+
+    <br><br>
+    <button type="submit">Update Application</button>
+  </form>
+{% endblock %}

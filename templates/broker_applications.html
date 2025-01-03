@@ -1,0 +1,71 @@
+<!-- templates/broker_applications.html -->
+{% extends "base.html" %}
+{% block content %}
+  <h2>My Applications</h2>
+  <table border="1">
+    <tr>
+      <th>App ID</th>
+      <th>Assigned Admin</th>
+      <th>Status</th>
+      <th>Pay Stubs</th>
+      <th>Bank Statements</th>
+      <th>Credit Report</th>
+      <th>Sale Agreement</th>
+      <th>Gift Letter</th>
+      <th>Property Info</th>
+      <th>Actions</th>
+    </tr>
+    {% for app in applications %}
+    <tr>
+      <td>{{ app.application_id }}</td>
+      <td>{{ app.admin_assigned_id }}</td>
+      <td>{{ app.status }}</td>
+      <td>
+        {% if app.pay_stubs %}
+          <a href="{{ url_for('static', filename=app.pay_stubs | replace('uploads/','uploads/') ) }}" target="_blank">View</a>
+        {% else %}
+          None
+        {% endif %}
+      </td>
+      <td>
+        {% if app.bank_statements %}
+          <a href="{{ url_for('static', filename=app.bank_statements) }}" target="_blank">View</a>
+        {% else %}
+          None
+        {% endif %}
+      </td>
+      <td>
+        {% if app.credit_report %}
+          <a href="{{ url_for('static', filename=app.credit_report) }}" target="_blank">View</a>
+        {% else %}
+          None
+        {% endif %}
+      </td>
+      <td>
+        {% if app.sale_agreement %}
+          <a href="{{ url_for('static', filename=app.sale_agreement) }}" target="_blank">View</a>
+        {% else %}
+          None
+        {% endif %}
+      </td>
+      <td>
+        {% if app.gift_letter %}
+          <a href="{{ url_for('static', filename=app.gift_letter) }}" target="_blank">View</a>
+        {% else %}
+          None
+        {% endif %}
+      </td>
+      <td>
+        {% if app.property_info %}
+          <a href="{{ url_for('static', filename=app.property_info) }}" target="_blank">View</a>
+        {% else %}
+          None
+        {% endif %}
+      </td>
+      <td>
+        <a href="{{ url_for('edit_application', app_id=app.application_id) }}">Edit</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

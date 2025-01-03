@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Broker Portal</h1>
+
+{% if subpage == 'dashboard' %}
+  <h2>Broker Dashboard</h2>
+  <p>Welcome, {{ session.email }}.</p>
+  <p>
+    <a href="{{ url_for('broker_applications') }}">View My Applications</a>
+  </p>
+  <p>
+    <a href="{{ url_for('new_application') }}">Create New Application</a>
+  </p>
+
+{% elif subpage == 'broker_applications' %}
+  <h2>My Applications</h2>
+  <table border="1">
+    <tr>
+      <th>App ID</th>
+      <th>Assigned Admin</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    {% for app in applications %}
+    <tr>
+      <td>{{ app.application_id }}</td>
+      <td>{{ app.admin_assigned_id }}</td>
+      <td>{{ app.status }}</td>
+      <td>
+        <a href="{{ url_for('edit_application', app_id=app.application_id) }}">Edit</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <p>
+    <a href="{{ url_for('new_application') }}">Create New Application</a>
+  </p>
+
+{% elif subpage == 'edit_application' %}
+  <h2>Edit Application #{{ application.application_id }}</h2>
+  <p>Status: {{ application.status }}</p>
+  
+  <h3>Documents</h3>
+  <table border="1">
+    <tr>
+      <th>Doc ID</th>
+      <th>Doc Type</th>
+      <th>Doc Path</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    {% for doc in docs %}
+    <tr>
+      <td>{{ doc.doc_id }}</td>
+      <td>{{ doc.doc_type }}</td>
+      <td>
+        {% if doc.doc_path %}
+          <a href="{{ url_for('static', filename=doc.doc_path) }}" target="_blank">View</a>
+        {% else %}
+          (No file)
+        {% endif %}
+      </td>
+      <td>{{ doc.doc_status }}</td>
+      <td>
+        {% if doc.doc_status != 'approved' %}
+          <!-- link to reupload if doc not approved -->
+          <a href="{{ url_for('broker_upload_doc', app_id=application.application_id, doc_id=doc.doc_id) }}">
+            Re-upload
+          </a>
+        {% else %}
+          Approved
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+{% elif subpage == 'dashboard_new_application' %}
+  <!-- if you want "new_application" also in the same file -->
+  <h2>Create New Application</h2>
+  <form method="POST" enctype="multipart/form-data">
+    <!-- Document fields, etc. -->
+    <button type="submit">Submit Application</button>
+  </form>
+
+{% else %}
+  <p>Select an option in your broker portal.</p>
+{% endif %}
+
+{% endblock %}
