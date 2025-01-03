@@ -1,0 +1,57 @@
+/* static/css/style.css */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url("../images/background.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+  }
+  
+  .nav {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    text-align: right;
+  }
+  
+  .nav a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+  }
+  
+  .nav a:hover {
+    text-decoration: underline;
+  }
+  
+  .content {
+    margin: 40px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  h1, h2 {
+    margin-top: 0;
+  }
+  
+  form label {
+    display: inline-block;
+    width: 80px;
+  }
+  
+  form input {
+    padding: 5px;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  
